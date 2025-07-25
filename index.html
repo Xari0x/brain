@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+</head>
+<body data-theme="light">
+    <div id="notification-container"></div>
+    
+    <div class="app-container">
+        <header>
+            <nav class="main-nav">
+                <button id="show-projects-btn" class="active">Mes projets</button>
+                <button id="show-calendar-btn">Calendrier</button>
+                <button id="show-upcoming-tasks-btn">Événements à venir</button>
+            </nav>
+            <div class="header-actions">
+                <div class="theme-switcher">
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </header>
+        <main class="main-content">
+            <!-- Vue Gestionnaire de Projets -->
+            <div id="project-manager-view" class="view">
+                <aside class="projects-panel">
+                    <h2>Mes Projets</h2>
+                    <form id="new-project-form">
+                        <input type="text" id="new-project-name" class="input-field" placeholder="Nouveau projet..." required>
+                        <button type="submit" class="btn btn-primary">+</button>
+                    </form>
+                    <ul id="project-list"></ul>
+                </aside>
+                <section id="project-details-view" class="project-details-panel">
+                    <div id="no-project-selected" class="no-project-selected">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.92,11.6C21.76,11.23 21.4,11 21,11H14.69L15.64,7.34C15.68,7.16 15.69,6.97 15.69,6.78C15.69,6.24 15.45,5.77 15.08,5.4L14.1,4.41L7.45,11.06C7.16,11.35 7,11.74 7,12.15V21C7,21.55 7.45,22 8,22H18C18.41,22 18.77,21.84 18.95,21.56L22.41,15.3C22.78,14.71 23,14.06 23,13.38V13C23,12.47 22.52,12 22,12H21.92M3,21H5V11H3V21Z"></path></svg>
+                        <h3>Sélectionnez un projet</h3>
+                        <p>Ou créez-en un nouveau pour commencer.</p>
+                    </div>
+                    <div id="project-content" class="hidden">
+                        <div class="project-header">
+                            <h2 id="project-name-header">
+                                <span id="project-icon-header"></span>
+                                <span id="project-name-text-header"></span>
+                            </h2>
+                            <div class="project-header-buttons">
+                               <button id="open-customization-btn" class="btn btn-secondary">Personnaliser</button>
+                               <button id="delete-project-btn" class="btn btn-danger">Supprimer</button>
+                            </div>
+                        </div>
+                        <section class="description-section">
+                            <h3>Description</h3>
+                            <div id="project-description-preview"></div>
+                        </section>
+                        <h3>Tâches</h3>
+                        <ul id="task-list"></ul>
+                        <form id="new-task-form">
+                            <input type="text" id="new-task-text" class="input-field" placeholder="Nouvelle tâche..." required>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Vue Calendrier -->
+            <div id="calendar-app-view" class="view hidden">
+                <div class="calendar-header">
+                    <div class="calendar-nav"><button id="prev-month-btn">Précédent</button></div>
+                    <h2 id="current-month-year"></h2>
+                    <div class="calendar-nav"><button id="next-month-btn">Suivant</button></div>
+                </div>
+                <div class="calendar-grid" id="calendar-day-names"></div>
+                <div class="calendar-grid" id="calendar-days"></div>
+            </div>
+
+            <!-- Vue Tâches à venir -->
+            <div id="upcoming-tasks-view" class="view hidden">
+                 <div id="upcoming-tasks-grid"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modales du Gestionnaire de Projets -->
+    <div id="customization-modal-backdrop" class="modal-backdrop hidden"></div>
+    <div id="customization-modal" class="modal hidden">
+        <div class="modal-header">
+            <h3>Personnaliser le projet</h3>
+            <button id="close-customization-btn" class="close-button">&times;</button>
+        </div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="project-icon-input">Icône (Emoji)</label>
+                <input type="text" id="project-icon-input" class="input-field">
+            </div>
+            <div class="form-group">
+                <label for="project-color-input">Couleur</label>
+                <input type="color" id="project-color-input" class="input-field" style="padding: 0.2rem; height: 40px;">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="project-description-input">Description (Markdown supporté)</label>
+            <textarea id="project-description-input" class="textarea-field"></textarea>
+        </div>
+    </div>
+    
+    <div id="delete-modal-backdrop" class="modal-backdrop hidden"></div>
+    <div id="delete-confirm-modal" class="modal hidden">
+        <div class="modal-header"><h3>Confirmer la suppression</h3></div>
+        <p>Êtes-vous sûr de vouloir supprimer le projet "<b><span id="project-name-to-delete"></span></b>" ? Cette action est irréversible.</p>
+        <div class="modal-actions">
+            <button id="cancel-delete-btn" class="btn btn-secondary">Annuler</button>
+            <button id="confirm-delete-btn" class="btn btn-danger">Confirmer</button>
+        </div>
+    </div>
+
+    <!-- Modales du Calendrier -->
+    <div id="task-modal-backdrop" class="modal-backdrop hidden"></div>
+    <div id="task-modal" class="modal hidden">
+        <div class="modal-header">
+            <h3 id="modal-title">Ajouter une Tâche</h3>
+            <button class="close-button">&times;</button>
+        </div>
+        <form id="task-form">
+            <input type="hidden" id="task-id"><input type="hidden" id="task-date">
+            <div class="form-group"><label for="task-title-input">Titre</label><input type="text" id="task-title-input" class="input-field" required></div>
+            <div class="form-group"><label for="task-description-input">Description</label><textarea id="task-description-input" class="textarea-field" rows="3"></textarea></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group"><label for="task-color-input">Couleur</label><input type="color" id="task-color-input" class="input-field" value="#4a90e2"></div>
+                <div class="form-group"><label for="task-amount-input">Montant</label><input type="number" id="task-amount-input" class="input-field" step="0.01" placeholder="Ex: 19.99"></div>
+            </div>
+            <div class="form-group"><label for="task-logo-input">URL du logo</label><input type="url" id="task-logo-input" class="input-field" placeholder="https://example.com/logo.png"></div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="task-recurrence-select">Récurrence</label>
+                    <select id="task-recurrence-select" class="input-field">
+                        <option value="none">Aucune</option>
+                        <option value="daily">Tous les jours</option>
+                        <option value="weekly">Toutes les semaines</option>
+                        <option value="monthly">Tous les mois</option>
+                        <option value="yearly">Tous les ans</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-recurrence-end-type-select">Fin de la récurrence</label>
+                    <select id="task-recurrence-end-type-select" class="input-field">
+                        <option value="never">Jamais</option>
+                        <option value="on_date">À une date</option>
+                        <option value="after_count">Après X fois</option>
+                    </select>
+                </div>
+            </div>
+            <div id="recurrence-end-details" class="form-group hidden">
+                <input type="date" id="task-recurrence-end-date-input" class="input-field hidden">
+                <input type="number" id="task-recurrence-end-count-input" class="input-field hidden" placeholder="Nombre d'occurrences" min="1">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">Sauvegarder</button>
+        </form>
+    </div>
+
+    <div id="day-tasks-modal-backdrop" class="modal-backdrop hidden"></div>
+    <div id="day-tasks-modal" class="modal hidden">
+        <div class="modal-header">
+            <h3 id="day-tasks-title">Tâches du jour</h3>
+            <button class="close-button">&times;</button>
+        </div>
+        <ul id="day-tasks-list" style="list-style: none; padding: 0; max-height: 60vh; overflow-y: auto;"></ul>
+        <button id="add-task-for-day-btn" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Ajouter une tâche</button>
+    </div>
+
+    <div id="confirm-modal-backdrop" class="modal-backdrop hidden"></div>
+    <div id="confirm-modal" class="modal hidden">
+        <h3 id="confirm-title">Confirmer l'action</h3>
+        <p id="confirm-text"></p>
+        <div class="confirm-actions">
+            <button id="confirm-btn-no" class="btn btn-secondary">Annuler</button>
+            <button id="confirm-btn-yes" class="btn btn-danger">Confirmer</button>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
