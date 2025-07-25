@@ -431,11 +431,6 @@ header {
   display: flex;
   flex-direction: column;
 }
-@media (max-width: 768px) {
-  .project-details-panel {
-    height: 60vh;
-  }
-}
 
 .no-project-selected {
   display: flex;
@@ -635,7 +630,7 @@ header {
   font-size: 1.2rem;
   cursor: pointer;
   color: var(--text-color);
-  width: 160px;
+  width: 90px;
   height: 36px;
   border-radius: 10px;
   font-size: 1rem;

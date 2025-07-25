@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.notificationContainer.appendChild(notif);
         setTimeout(() => {
             notif.remove();
-        }, duration + 500); // +500ms pour l'animation de sortie
+        }, duration + 500);
     }
 
     function switchView(viewName) {
