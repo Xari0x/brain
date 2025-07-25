@@ -18,9 +18,9 @@
     <div class="app-container">
         <header>
             <nav class="main-nav">
-                <button id="show-projects-btn" class="active">Mes projets</button>
+                <button id="show-projects-btn" class="active">Projets</button>
                 <button id="show-calendar-btn">Calendrier</button>
-                <button id="show-upcoming-tasks-btn">Événements à venir</button>
+                <button id="show-upcoming-tasks-btn">À venir</button>
             </nav>
             <div class="header-actions">
                 <div class="theme-switcher">
@@ -35,10 +35,10 @@
             <!-- Vue Gestionnaire de Projets -->
             <div id="project-manager-view" class="view">
                 <aside class="projects-panel">
-                    <h2>Mes Projets</h2>
+                    <h2>Projets</h2>
                     <form id="new-project-form">
                         <input type="text" id="new-project-name" class="input-field" placeholder="Nouveau projet..." required>
-                        <button type="submit" class="btn btn-primary">+</button>
+                        <button type="submit" class="btn btn-primary">Créer</button>
                     </form>
                     <ul id="project-list"></ul>
                 </aside>
@@ -55,8 +55,8 @@
                                 <span id="project-name-text-header"></span>
                             </h2>
                             <div class="project-header-buttons">
-                               <button id="open-customization-btn" class="btn btn-secondary">Personnaliser</button>
-                               <button id="delete-project-btn" class="btn btn-danger">Supprimer</button>
+                               <button id="open-customization-btn" class="btn btn-secondary">🎨</button>
+                               <button id="delete-project-btn" class="btn btn-danger">🗑️</button>
                             </div>
                         </div>
                         <section class="description-section">
@@ -76,9 +76,15 @@
             <!-- Vue Calendrier -->
             <div id="calendar-app-view" class="view hidden">
                 <div class="calendar-header">
-                    <div class="calendar-nav"><button id="prev-month-btn">Précédent</button></div>
+                    <div class="calendar-nav"><button id="prev-month-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M15.42,7.41L10.83,12L15.42,16.59L14,18L8,12L14,6L15.42,7.41Z" fill="currentColor"/>
+                    </svg>
+                    </button></div>
                     <h2 id="current-month-year"></h2>
-                    <div class="calendar-nav"><button id="next-month-btn">Suivant</button></div>
+                    <div class="calendar-nav"><button id="next-month-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8.58,16.59L13.17,12L8.58,7.41L10,6L16,12L10,18L8.58,16.59Z" fill="currentColor"/>
+                    </svg>
+                    </button></div>
                 </div>
                 <div class="calendar-grid" id="calendar-day-names"></div>
                 <div class="calendar-grid" id="calendar-days"></div>

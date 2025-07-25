@@ -459,10 +459,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         [...upcomingTasks.entries()].sort((a,b) => a[0].localeCompare(b[0])).forEach(([dateString, tasks]) => {
             const date = fromLocalDateString(dateString);
+            const diffTime = date.getTime() - today.getTime();
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+            let countdownText = '';
+            if (diffDays === 0) {
+                countdownText = "Aujourd'hui";
+            } else {
+                countdownText = `Dans ${diffDays} jour${diffDays > 1 ? 's' : ''}`;
+            }
+
             const dayGroupEl = document.createElement('div');
             dayGroupEl.className = 'task-day-group';
-            dayGroupEl.innerHTML = `<h3>${date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase()}</h3>`;
+            
+            dayGroupEl.innerHTML = `
+                <div class="task-day-group-header">
+                    <h3>${date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase()}</h3>
+                    <span class="countdown-tag">${countdownText}</span>
+                </div>
+            `;
+            
             tasks.forEach(task => { dayGroupEl.innerHTML += createCalendarTaskItemElement(task); });
+            
             dom.upcomingTasksGrid.appendChild(dayGroupEl);
         });
     }

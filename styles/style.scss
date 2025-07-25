@@ -127,12 +127,15 @@ header {
         color: var(--text-color-light);
         cursor: pointer;
         border-radius: 6px;
+        font-size: 1rem;
         font-weight: 500;
-        transition: background-color var(--transition-speed), color var(--transition-speed);
+        font-family: var(--font-family);
+        border: 2px solid transparent;
+        transition: border-color var(--transition-speed), color var(--transition-speed);
 
         &.active {
-            background-color: var(--primary-color);
-            color: #fff;
+            color: var(--text-color);
+            border-color: var(--primary-color);
         }
     }
 }
@@ -217,7 +220,7 @@ header {
         width: 18px;
         height: 18px;
         transition: fill 0.2s;
-        fill: var(--text-color-light);
+        color: var(--text-color-light);
     }
 }
 
@@ -446,7 +449,7 @@ header {
         height: 80px; 
         margin-bottom: 1rem; 
         opacity: 0.5; 
-        fill: var(--text-color-light); 
+        color: var(--text-color-light); 
     }
 }
 
@@ -490,7 +493,7 @@ header {
 
     &:hover {
         background-color: rgba(74, 144, 226, 0.1);
-        .btn-icon svg { fill: var(--text-color); }
+        .btn-icon svg { color: var(--text-color); }
     }
 
     &.active {
@@ -502,14 +505,14 @@ header {
         &:hover { filter: brightness(90%); }
         
         .btn-icon {
-            svg { fill: #fff; }
-            &:hover svg { fill: #ffdddd; }
-            &.delete-btn:hover svg { fill: #ffdddd; }
+            svg { color: #fff; }
+            &:hover svg { color: #ffdddd; }
+            &.delete-btn:hover svg { color: #ffdddd; }
         }
     }
     
     .btn-icon.delete-btn:hover svg {
-        fill: var(--danger-color);
+        color: var(--danger-color);
     }
 }
 
@@ -555,8 +558,8 @@ header {
     }
 
     .btn-icon {
-        svg { fill: var(--text-color-light); }
-        &:hover svg { fill: var(--danger-color); }
+        svg { color: var(--text-color-light); }
+        &:hover svg { color: var(--danger-color); }
     }
 }
 
@@ -626,10 +629,20 @@ header {
     width: 160px;
     height: 36px;
     border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--font-family);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color var(--transition-speed);
+
+    svg {
+        width: 22px;
+        height: 22px;
+        transition: fill 0.2s;
+        color: var(--text-color-light);
+    }
 
     &:hover { opacity: 0.8; }
 }
@@ -720,7 +733,7 @@ header {
 
 #upcoming-tasks-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 1.5rem;
 }
 
@@ -729,15 +742,33 @@ header {
     border-radius: var(--border-radius);
     padding: 1.5rem;
     border: 1px solid var(--border-color);
+}
+
+.task-day-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 
     h3 {
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 0.5rem;
-        margin-top: 0;
-        margin-bottom: 1rem;
+        margin: 0;
+        padding: 0;
+        border: none;
         color: var(--primary-color);
         font-size: 1.1rem;
     }
+}
+
+.countdown-tag {
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    flex-shrink: 0;
 }
 
 .calendar-task-item {
