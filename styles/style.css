@@ -431,6 +431,11 @@ header {
   display: flex;
   flex-direction: column;
 }
+@media (max-width: 768px) {
+  .project-details-panel {
+    padding-bottom: 100px;
+  }
+}
 
 .no-project-selected {
   display: flex;
@@ -461,12 +466,16 @@ header {
   font-size: 2rem;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   gap: 0.75rem;
 }
 
 .project-header-buttons {
   display: flex;
   gap: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 #project-list {
