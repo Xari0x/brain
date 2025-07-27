@@ -121,6 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Impossible de charger les données depuis l'API:", error);
             showNotification(error.message, "error");
         }
+
+        setTimeout(loadDataFromApi, 60000);
     }
 
     async function sendApiAction(action, payload) {
@@ -646,7 +648,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     [dom.taskModal, dom.dayTasksModal].forEach(modal => {
-        modal.querySelector('.close-button').addEventListener('click', () => hideModal(modal, modal.previousElementSibling));
         modal.previousElementSibling.addEventListener('click', () => hideModal(modal, modal.previousElementSibling));
     });
     dom.confirmModalBackdrop.addEventListener('click', () => hideModal(dom.confirmModal, dom.confirmModalBackdrop));
