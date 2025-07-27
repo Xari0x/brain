@@ -568,7 +568,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     dom.deleteProjectBtn.addEventListener('click', () => { if(activeProjectId) showDeleteModal(activeProjectId); });
     dom.openCustomizationBtn.addEventListener('click', () => showModal(dom.customizationModal, dom.customizationModalBackdrop));
-    dom.closeCustomizationBtn.addEventListener('click', () => hideModal(dom.customizationModal, dom.customizationModalBackdrop));
     dom.customizationModalBackdrop.addEventListener('click', () => hideModal(dom.customizationModal, dom.customizationModalBackdrop));
     dom.projectIconInput.addEventListener('blur', () => updateProjectDetails(activeProjectId, { icon: dom.projectIconInput.value }));
     dom.projectColorInput.addEventListener('input', () => updateProjectDetails(activeProjectId, { color: dom.projectColorInput.value }));
