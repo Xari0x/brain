@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (t.recurrenceEnd === undefined) t.recurrenceEnd = { type: 'never' };
             });
             showNotification("Données chargées avec succès.", "success");
+
+            render()
         } catch (error) {
             console.error("Impossible de charger les données depuis l'API:", error);
             showNotification(error.message, "error");
