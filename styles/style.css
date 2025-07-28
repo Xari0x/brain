@@ -102,22 +102,21 @@ header {
 
 .main-nav button {
   font-size: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.5rem;
   margin-right: 0.5rem;
   border: none;
   background-color: transparent;
   color: var(--text-color-light);
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: var(--border-radius);
   font-size: 1rem;
   font-weight: 500;
   font-family: var(--font-family);
-  border: 2px solid transparent;
-  transition: border-color var(--transition-speed), color var(--transition-speed);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 .main-nav button.active {
-  color: var(--text-color);
-  border-color: var(--primary-color);
+  color: var(--surface-color);
+  background-color: var(--primary-color);
 }
 
 .header-actions {
